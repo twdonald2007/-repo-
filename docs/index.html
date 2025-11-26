@@ -25,9 +25,12 @@
 
 <script>
 const backendInput = document.getElementById("backendUrl");
+const DEFAULT_BACKEND = "https://repo-q4th.onrender.com/analyze";
 const savedBackend = localStorage.getItem("backendUrl");
 if (savedBackend) {
     backendInput.value = savedBackend;
+} else {
+    backendInput.value = DEFAULT_BACKEND;
 }
 
 function saveBackendUrl() {
