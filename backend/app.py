@@ -14,11 +14,12 @@ app = Flask(__name__)
 CORS(app)
 
 # ✅ 這裡是你目前最嚴重的錯誤來源（我先照你寫法保留，但先 print 出來）
-CLARIFAI_API_KEY = os.getenv("cf19f10e5f3c4a1482278b3d5d2e1b37")
-USER_ID = os.getenv("clarifai")
-APP_ID = os.getenv("main")
-MODEL_ID = os.getenv("food-item-recognition")
-MODEL_VERSION_ID = os.getenv("1d5fd481e0cf4826aa72ec3ff049e044")
+CLARIFAI_API_KEY = os.getenv("CLARIFAI_API_KEY")
+USER_ID = os.getenv("CLARIFAI_USER_ID")
+APP_ID = os.getenv("CLARIFAI_APP_ID")
+MODEL_ID = os.getenv("CLARIFAI_MODEL_ID")
+MODEL_VERSION_ID = os.getenv("CLARIFAI_MODEL_VERSION_ID")
+
 
 print("=== ENV DEBUG ===")
 print("CLARIFAI_API_KEY:", CLARIFAI_API_KEY)
