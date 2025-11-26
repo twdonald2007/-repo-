@@ -46,7 +46,22 @@ def analyze():
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    if not response.ok:
+        return jsonify({
+            "error": "Clarifai request failed",
+            "status_code": response.status_code,
+            "details": response.text
+        }), response.status_code
+
     result = response.json()
+
+    status = result.get("status", {})
+    if status.get("code") != 10000:
+        return jsonify({
+            "error": "Clarifai returned non-success status",
+            "status": status,
+            "raw": result
+        }), 502
 
     try:
         concepts = result["outputs"][0]["data"]["concepts"]
@@ -54,8 +69,12 @@ def analyze():
             {"ingredient": c["name"], "confidence": c["value"]}
             for c in concepts
         ]
-    except:
-        ingredients = []
+    except Exception as e:
+        return jsonify({
+            "error": "Failed to parse Clarifai response",
+            "exception": str(e),
+            "raw": result
+        }), 502
 
     return jsonify({"ingredients": ingredients})
 
