@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Ingredient Detector</title>
+</head>
+<body>
+
+<h2>Upload food image</h2>
+
+<input type="file" id="img" accept="image/*">
+<button onclick="analyzeImage()">Analyze</button>
+
+<h3>Result:</h3>
+<pre id="result"></pre>
+
+<script>
+async function analyzeImage() {
+    const file = document.getElementById("img").files[0];
+    if (!file) {
+        alert("Please choose an image.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await fetch("http://127.0.0.1:5000/analyze", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    document.getElementById("result").innerText =
+        JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>
